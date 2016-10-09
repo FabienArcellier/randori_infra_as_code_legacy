@@ -36,13 +36,6 @@ You can find the latest version to ...
 
 ## Code Example
 
-Pour monter les machines virtuelles sous virtualbox :
-
-```bash
-vagrant up
-vagrant ssh-config > ssh.config
-```
-
 Pour jouer les tests serverspec
 
 ```bash
@@ -56,6 +49,16 @@ rake --tasks
 ```
 
 ## Installation
+
+Pour monter l'environnement, la première fois :
+
+```bash
+vagrant up
+vagrant ssh-config > ssh.config
+ansible-playbook -i host bootstrap/site.yml
+```
+
+**Comment avons nous monté ce repository ?**
 
 Pour bootstraper ce projet, nous avons utilisé ``ansible_spec`` ([lien](https://github.com/volanja/ansible_spec))
 
