@@ -11,7 +11,7 @@ containers. Nous devons vivre avec ce legacy. Ca ne signifie pas forcément le s
 
 ## Synopsis
 
-Dans ce randory, vous êtes membre d'une équipe d'un site de ecommerce "cartagen".
+Dans ce randori, vous êtes membre d'une équipe d'un site de ecommerce "cartagen".
 
 Au cours des 2 derniers mois, votre équipe a monté un nouveau service qui permet aux utilisateurs de publier des annonces.
 
@@ -21,7 +21,7 @@ main dans la main pour la correction de l'infrastructure.
 
 Votre budget est limité et un de vos collaborateurs a proposé d'amorcer une démarche itérative pour faire évoluer l'infra.
 
-L'objectif de ce randory est de démontrer par des pratiques d'infra as code comment faire évoluer pas à pas une infrastructure et reprendre le contrôle de son legacy :
+L'objectif de ce randori est de démontrer par des pratiques d'infra as code comment faire évoluer pas à pas une infrastructure et reprendre le contrôle de son legacy :
 
 * Appliquer de la gestion de configuration avec Ansible
 * Appliquer les principes de Test Driven Developpment avec ServerSpec
