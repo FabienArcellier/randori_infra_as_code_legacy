@@ -1,0 +1,14 @@
+---
+- hosts: webserver_hermes
+  become: yes
+  vars:
+
+  tasks:
+
+    - name: ensure apache2 packaged is installed
+      apt: name=apache2 state=present
+
+    - name: ensure apache is not running
+      service: name=apache2 state=stopped
+
+  roles:
