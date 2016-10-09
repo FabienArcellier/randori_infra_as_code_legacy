@@ -1,0 +1,8 @@
+[webserver]
+webserver_aramis
+webserver_appolon
+webserver_hermes
+
+[database]
+database_zeus
+database_poseidon

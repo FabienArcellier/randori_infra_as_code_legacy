@@ -1,7 +1,7 @@
 ## Motivation
 
-Dans une DSI, les machines évoluent suivant des process souvent écrit.
-Chaque Sysadmin met le maximum d'effort pour optimiser les machines de façon cohérente.
+Dans une DSI historique, la gestion du parc des machines est effectuée semi-manuellement.
+Chaque Sysadmin met le maximum d'effort pour garder un parc homogène et cohérent.
 
 Pourtant, avec les meilleurs efforts du monde, ce type d'effort conduit à des serveurs tous pareils mais différents, un peu comme des flocons de neige.
 Martin Fowler décrit ce pattern d'infrastructure comme des [Snowflake Server](http://martinfowler.com/bliki/SnowflakeServer.html).
@@ -12,6 +12,7 @@ containers. Nous devons vivre avec ce legacy. Ca ne signifie pas forcément le s
 ## Synopsis
 
 Dans ce randory, vous êtes membre d'une équipe d'un site de ecommerce "cartagen".
+
 Au cours des 2 derniers mois, votre équipe a monté un nouveau service qui permet aux utilisateurs de publier des annonces.
 
 Ce système a été mis douloureusement en production. Vous venez de faire une refonte.
@@ -25,6 +26,7 @@ L'objectif de ce randory est de démontrer par des pratiques d'infra as code com
 * Appliquer de la gestion de configuration avec Ansible
 * Appliquer les principes de Test Driven Developpment avec ServerSpec
 * Comprendre le pattern "Pets vs Cattle"
+* ...
 
 ## The latest version
 
@@ -34,11 +36,68 @@ You can find the latest version to ...
 
 ## Code Example
 
-5-line code snippet on how its used (if it's a library)
+Pour monter les machines virtuelles sous virtualbox :
+
+```bash
+vagrant up
+vagrant ssh-config > ssh.config
+```
+
+Pour jouer les tests serverspec
+
+```bash
+rake all
+```
+
+Pour lister les suites de test serverspec
+
+```bash
+rake --tasks
+```
 
 ## Installation
 
+Pour bootstraper ce projet, nous avons utilisé ``ansible_spec`` ([lien](https://github.com/volanja/ansible_spec))
+
+```
+vagrant init
+gem install ansible_spec
+```
+
+Nous avons modifié le rakefile pour qu'il prenne en compte le groupe, plutôt que les rôles dans le groupe.
+
+```ruby
+- roles = property["roles"]
+- for role in property["roles"]
+-   deps = AnsibleSpec.load_dependencies(role)
+-   roles += deps
+- end
+- t.pattern = 'roles/{' + roles.join(',') + '}/spec/*_spec.rb'
++ t.pattern = 'spec/' +  property["name"] +'_spec.rb'
+```
+
+**Pourquoi construire un fichier ssh.config ?**
+
+Si le fichier ssh.config est absent, nous devrions configurer soit le fichier host de la machine, soit compter sur un DNS.
+Le fichier ssh.config est utilisé par ansible et serverspec pour se connecter en ssh sur la machine distante.
+Il y récupère l'adresse IP et le nom d'utilisateur.
+
+A partir du Vagrantfile, nous avons généré le fichier ssh.config qui correspond à l'infrastructure.
+
+```bash
+vagrant ssh-config > ssh.config
+```
+
 ## Tests
+
+Pour vérifier la syntaxe de votre code ansible
+
+```bash
+ansible-playbook --syntax-check -i "localhost," site.yml
+
+# pour le faire de manière continue
+watch -n 5 ansible-playbook --syntax-check -i "localhost," site.yml
+```
 
 ## Contributors
 

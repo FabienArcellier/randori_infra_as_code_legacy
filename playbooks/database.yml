@@ -1,0 +1,6 @@
+---
+- name: "database"
+  hosts: database
+  vars:
+  tasks:
+  roles:
