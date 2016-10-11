@@ -20,6 +20,7 @@ namespace :serverspec do
         puts "Run serverspec for #{property["name"]} to #{host}"
         ENV['TARGET_HOST'] = host["uri"]
         t.pattern = 'spec/' +  property["name"] +'_spec.rb'
+        t.fail_on_error = false
       end
     end
   end
