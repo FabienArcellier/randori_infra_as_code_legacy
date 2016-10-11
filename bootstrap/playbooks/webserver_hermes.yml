@@ -4,7 +4,8 @@
   vars:
 
   tasks:
-
+    - name: update repos
+      apt: update_cache=yes
     - name: ensure apache2 packaged is installed
       apt: name=apache2 state=present
 
