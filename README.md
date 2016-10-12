@@ -55,7 +55,7 @@ Pour monter l'environnement, la première fois :
 ```bash
 vagrant up
 vagrant ssh-config > ssh.config
-ansible-playbook -i host bootstrap/site.yml
+ansible-playbook -i hosts bootstrap/site.yml
 ```
 
 **Comment avons nous monté ce repository ?**
