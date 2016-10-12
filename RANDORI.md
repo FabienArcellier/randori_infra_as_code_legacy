@@ -42,7 +42,7 @@ describe "webserver" do
   # ...
   it "needs to have the ntp service installed and active" do
     expect(package('ntp')).to be_installed
-    expect(command('ntpq -pn')).to be_running
+    expect(service('ntp')).to be_running
   end
   # ...
 end
@@ -70,6 +70,7 @@ end
 
 Allez plus loin
 
+* Gérer la mise à jour de package (present, latest, ...)
 * La convergence ntp met du temps (ntpq -pn)
 * Gestion du timezone ``timezone: name=Asia/Tokyo``
 * ...

@@ -36,13 +36,19 @@ You can find the latest version to ...
 
 ## Code Example
 
-Pour jouer les tests serverspec
+**Jouer les tests serverspec**
 
 ```bash
 rake all
 ```
 
-Pour lister les suites de test serverspec
+**Pour configurer votre infrastructure**
+
+```bash
+ansible-playbook -i hosts site.yml
+```
+
+**Lister les suites de test serverspec**
 
 ```bash
 rake --tasks
