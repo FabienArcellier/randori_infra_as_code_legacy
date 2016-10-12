@@ -5,7 +5,10 @@
   vars:
   tasks:
 
-  - name: "ensure apache2 is running"
-    service: name="apache2" state="started"
+  - name: ensure apache2 is running
+    service: name=apache2 state=started
+
+  - name: ensure ntp package is installed
+    apt: name=ntp state=present
 
   roles:
