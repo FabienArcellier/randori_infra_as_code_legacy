@@ -5,11 +5,15 @@
 
   tasks:
     - name: update repos
-      apt: update_cache=yes
+      apt: update_cache=yes cache_valid_time=3600
+
     - name: ensure apache2 packaged is installed
       apt: name=apache2 state=present
 
     - name: ensure apache is running (and enable it at boot)
       service: name=apache2 state=started
+
+    - name: ensure ntp packaged is absent
+      apt: name=ntp state=absent
 
   roles:

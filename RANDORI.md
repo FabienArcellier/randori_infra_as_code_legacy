@@ -1,15 +1,12 @@
 # Challenge 1 : Vérifier que tous les serveurs répondent sur le port 80
 
-2 de nos serveurs webs absorbent le traffic.
-Il semblerait que ``webserver_hermes`` ne répond pas sur le port 80.
+2 de nos serveurs webs absorbent le traffic d'après notre firewall. Il semblerait que ``webserver_hermes`` ne répond pas sur le port 80.
 
 Nous allons décrire une règle qui spécifie qu'un serveur web doit avoir le port 80 ouvert.
 
 écrire le test serverspec dans ``spec/webserver_spec.rb``:
 
 ```ruby
-require 'spec_helper'
-
 describe "webserver" do
   it "needs to have the port 80 listening" do
     expect(port('80')).to be_listening
@@ -17,46 +14,69 @@ describe "webserver" do
 end
 ```
 
-Indice Ansible : Vous devez utiliser le module service pour vous assurer que le service apache2 est démarré sur toutes les machines
+**Indice Ansible** : Vous devez utiliser le module service pour vous assurer que le service apache2 est démarré sur toutes les machines
 
 ```yml
 - name: "ensure the service is started"
   service: name="my_service" state="started"
 ```
 
+Allez plus loin :
+
+* L'importance du monitoring
+* Utiliser Ansible pour du test d'infrastructure
+* ...
+
 # Challenge 2 : Synchroniser tous les serveurs avec un serveur ntp
 
-Nous avons remarqué dans nos logs que le serveur artemis a 17 minutes de retard sur les 2 autres serveurs web.
-Lors d'une analyse d'incident, nous avons perdu du temps pour recomposer les logs de l'incident
+Nous avons remarqué dans nos logs que le serveur artemis a du retard sur les 2 autres serveurs web. Lors d'une analyse d'incident, nous avons perdu du temps pour recomposer les logs de l'incident
 
-Nous allons nous assurer d'installer un serveur ntp sur toutes les machines (database et webserver).
+Nous allons nous assurer d'installer un serveur ``Network Time Protocol`` (ntp) sur toutes les machines (database et webserver).
 
 Pour cet exercice, nous ferons un test serveurspec pour chaque profil.
 
 écrire le test serverspec dans ``spec/webserver_spec.rb``:
 
 ```ruby
-it "needs to have the ntp service installed and active" do
-  expect(package('ntp')).to be_installed
-  expect(command('ntpq -pn')).to be_running
+describe "webserver" do
+  # ...
+  it "needs to have the ntp service installed and active" do
+    expect(package('ntp')).to be_installed
+    expect(command('ntpq -pn')).to be_running
+  end
+  # ...
 end
 ```
 
+écrire le test serverspec dans ``spec/database_spec.rb``:
 
-
-Indice Ansible : Vous devez utiliser le module apt pour vous assurer que le service apache2 est démarré sur toutes les machines
-
-```yml
-- name: "ensure the service is present"
-  apt: name="my_service" state="present"
+```ruby
+describe "database" do
+  # ...
+  it "needs to have the ntp service installed and active" do
+    expect(package('ntp')).to be_installed
+    expect(command('ntpq -pn')).to be_running
+  end
+  # ...
+end
 ```
 
-Disclaimer: La convergence ntp met du temps (ntpq -pn)
+**Indice Ansible** : Vous devez utiliser le module apt pour vous assurer que le package ``ntp`` est démarré sur toutes les machines
 
-# Challenge 3 : Créer des accès nominatifs
+```yml
+- name: "ensure the package is present"
+  apt: name="package" state="present"
+```
 
-Un audit de sécurité est tombé. Les développeurs ne doivent plus avoir tout pouvoir sur les machines.
-Il faut créer des comptes nominatifs.
+Allez plus loin
+
+* La convergence ntp met du temps (ntpq -pn)
+* Gestion du timezone ``timezone: name=Asia/Tokyo``
+* ...
+
+# Challenge 3 : Créer des accès nominatifs pour les développeurs
+
+Un audit de sécurité est tombé. Les développeurs ne doivent plus avoir tout pouvoir sur les machines. Il faut créer des comptes nominatifs.
 
 ```ruby
 describe group('dev') do
@@ -64,6 +84,21 @@ describe group('dev') do
 end
 ```
 
-Disclaimer : Droit d'acces ssh, repertoire home, sudo et consort
+Allez plus loin
+
+* Gestion des clés d'accès ssh,
+* Gérer les dossiers home
+* Gérer les accès sudo
+* Utiliser une base de donnée grace au lookup avec Ansible
+* ...
 
 # Challenge 4 : Faire ecouter apache sur le port 81 pour les fichiers statiques
+
+
+```ruby
+describe "webserver" do
+  it "needs to have the port 80 listening to send static assets" do
+    expect(port('80')).to be_listening
+  end
+end
+```

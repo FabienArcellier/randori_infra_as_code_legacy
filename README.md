@@ -48,6 +48,23 @@ Pour lister les suites de test serverspec
 rake --tasks
 ```
 
+## Tips
+
+**Vérifier votre code ansible pendant que vous développez**
+
+```bash
+watch -n 5 ansible-playbook --syntax-check -i "localhost," site.yml
+```
+
+**Se connecter en ssh sur une machine**
+
+Vous pouvez utiliser le fichier ssh.config plutot que l'accès vagrant.
+Vous pourrez utiliser la même démarche pour un autre environnement.
+
+```bash
+ssh -F ssh.config webserver_artemis
+```
+
 ## Installation
 
 Pour monter l'environnement, la première fois :
@@ -97,9 +114,6 @@ Pour vérifier la syntaxe de votre code ansible
 
 ```bash
 ansible-playbook --syntax-check -i "localhost," site.yml
-
-# pour le faire de manière continue
-watch -n 5 ansible-playbook --syntax-check -i "localhost," site.yml
 ```
 
 ## Contributors
