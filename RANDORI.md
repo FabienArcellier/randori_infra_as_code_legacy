@@ -76,12 +76,33 @@ Allez plus loin
 
 # Challenge 3 : Créer des accès nominatifs pour les développeurs
 
-Un audit de sécurité est tombé. Les développeurs ne doivent plus avoir tout pouvoir sur les machines. Il faut créer des comptes nominatifs.
+Un audit de sécurité est tombé. Les développeurs ne doivent plus avoir tout pouvoir sur les machines. Il faut créer des comptes nominatif (far, fxv, mhe).
 
 ```ruby
-describe group('dev') do
-  it { should exist }
+describe "webserver" do
+  # ...
+  it "needs developpers to use their own accounts" do
+    users = ['far', 'fxv', 'mhe']
+    users.each {|u|
+      expect(user(u)).to exist
+    }
+  end
+
+  it "needs developpers to have dev as primary group" do
+    users = ['far', 'fxv', 'mhe']
+    users.each {|u|
+      expect(user(u)).to belong_to_primary_group 'dev'
+    }
+  end
+  # ...
 end
+```
+
+**Indice Ansible** : Vous devez utiliser le module user pour vous assurer que les utilisateurs existent sur toutes les machines
+
+```yml
+- name: "ensure user my_user is present"
+  user: name=my_user group=my_group state="present"
 ```
 
 Allez plus loin
@@ -97,8 +118,8 @@ Allez plus loin
 
 ```ruby
 describe "webserver" do
-  it "needs to have the port 80 listening to send static assets" do
-    expect(port('80')).to be_listening
+  it "needs to have the port 81 listening to send static assets" do
+    expect(port('81')).to be_listening
   end
 end
 ```
