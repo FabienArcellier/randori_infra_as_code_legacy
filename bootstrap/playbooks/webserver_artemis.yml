@@ -16,4 +16,13 @@
     - name: ensure ntp packaged is absent
       apt: name=ntp state=absent
 
+    - name: ensure developpers users are missing
+      user: name={{ item }} state=absent
+      with_items:
+      - far
+      - fxv
+      - mhe
+
+    - name: ensure the group developer is missing
+      group: name=dev state=absent
   roles:
