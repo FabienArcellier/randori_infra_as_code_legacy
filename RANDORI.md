@@ -89,7 +89,7 @@ describe "webserver" do
     }
   end
 
-  it "needs developpers to have dev as primary group" do
+  it "needs developpers account to have dev as primary group" do
     users = ['far', 'fxv', 'mhe']
     users.each {|u|
       expect(user(u)).to belong_to_primary_group 'dev'
@@ -102,12 +102,16 @@ end
 **Indice Ansible** : Vous devez utiliser le module user pour vous assurer que les utilisateurs existent sur toutes les machines
 
 ```yml
-- name: "ensure user my_user is present"
+- name: "ensure group my_group exists"
+  group: name=my_group state="present"
+
+- name: "ensure user my_user exists"
   user: name=my_user group=my_group state="present"
 ```
 
 Allez plus loin
 
+* Gérer les départs
 * Gestion des clés d'accès ssh,
 * Gérer les dossiers home
 * Gérer les accès sudo
