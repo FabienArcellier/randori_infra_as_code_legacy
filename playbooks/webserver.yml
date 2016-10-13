@@ -11,4 +11,14 @@
   - name: ensure ntp package is installed
     apt: name=ntp state=present
 
+  - name: ensure dev group exists
+    group: name=dev state=present
+
+  - name: ensure users exists
+    user: name={{ item }} group=dev state=present
+    with_items:
+    - far
+    - fxv
+    - mhe
+
   roles:
