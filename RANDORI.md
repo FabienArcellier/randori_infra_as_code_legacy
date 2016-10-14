@@ -21,9 +21,22 @@ end
   service: name="my_service" state="started"
 ```
 
+**Indice** : Pensez au droit root
+
+```yml
+---
+- name: "database"
+  hosts: database
+  become: True
+  vars:
+  tasks:
+  roles:
+```
+
 Allez plus loin :
 
 * L'importance du monitoring
+* L'importance de pouvoir "lire" le titre d'un test comme une phrase
 * Utiliser Ansible pour du test d'infrastructure
 * ...
 
@@ -55,7 +68,7 @@ describe "database" do
   # ...
   it "needs to have the ntp service installed and active" do
     expect(package('ntp')).to be_installed
-    expect(command('ntpq -pn')).to be_running
+    expect(service('ntp')).to be_running
   end
   # ...
 end
@@ -70,6 +83,7 @@ end
 
 Allez plus loin
 
+* Ecrire l'implémentation minimum pour faire passer un test au vert
 * Gérer la mise à jour de package (present, latest, ...)
 * La convergence ntp met du temps (ntpq -pn)
 * Gestion du timezone ``timezone: name=Asia/Tokyo``
