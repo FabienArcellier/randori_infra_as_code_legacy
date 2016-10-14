@@ -1,3 +1,5 @@
+[![asciicast](https://asciinema.org/a/dnate3nnkpkoevrfipqnmb1qo.png)](https://asciinema.org/a/dnate3nnkpkoevrfipqnmb1qo)
+
 ## Motivation
 
 Dans une DSI historique, la gestion du parc des machines est effectuée semi-manuellement.
@@ -32,7 +34,7 @@ L'objectif de ce randori est de démontrer par des pratiques d'infra as code com
 
 You can find the latest version to ...
 
-    git clone ...
+    git clone https://github.com/FabienArcellier/randori_infra_as_code_legacy.git
 
 ## Code Example
 
