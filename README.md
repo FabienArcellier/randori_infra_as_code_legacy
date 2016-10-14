@@ -11,6 +11,20 @@ Martin Fowler décrit ce pattern d'infrastructure comme des [Snowflake Server](h
 Nous ne pouvons pas tous repartir d'une infrastructure flambant neuve bati avec un orchestrateur docker, du monitoring efficace de l'infrastructure et des différents
 containers. Nous devons vivre avec ce legacy. Ca ne signifie pas forcément le subir.
 
+**Principe du randori**
+
+Un randori est un dojo participatif avec un seul clavier. Vous aurez besoin d'un animateur pour le story telling.
+Ce randori se joue avec 7 à 8 participants.
+
+Chaque participant aura accès au clavier 5 minutes avec comme but de faire avancer le dojo. Soit il va :
+
+* spécifier un test ServerSpec pour rendre le problème visible (Test rouge)
+* faire passer le test ServerSpec avec du code Ansible (Test vert)
+* refactorer le code pour limiter la dette technique (Test toujours vert)
+
+Vous pouvez profiter des différents challenges pour introduire des discussions plus poussés (section Allez plus loin).
+Les challenges sont dans le fichier ``RANDORI.md``.
+
 ## Synopsis
 
 Dans ce randori, vous êtes membre d'une équipe d'un site de ecommerce "cartagen".
