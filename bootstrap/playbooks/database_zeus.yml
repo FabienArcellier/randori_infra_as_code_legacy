@@ -1,5 +1,5 @@
 ---
-- hosts: database_poseidon
+- hosts: database_zeus
   become: yes
   vars:
 
