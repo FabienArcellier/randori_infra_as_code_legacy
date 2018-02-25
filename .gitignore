@@ -1,4 +1,5 @@
+/.idea
+/.vagrant
+/ssh.config
 *.retry
-.vagrant
 .rake_tasks*
-ssh.config
