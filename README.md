@@ -61,7 +61,7 @@ rake all
 **Pour configurer votre infrastructure**
 
 ```bash
-ansible-playbook -i hosts site.yml
+ansible-playbook -i hosts playbooks/site.yml
 ```
 
 **Lister les suites de test serverspec**
