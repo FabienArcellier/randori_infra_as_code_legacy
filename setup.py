@@ -12,6 +12,7 @@ setup(
     },
     install_requires = [
         'ansible',
-        'testinfra'
+        'testinfra==1.10.1',
+        'pytest'
     ]
 )

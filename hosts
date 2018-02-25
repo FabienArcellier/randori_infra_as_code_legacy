@@ -1,5 +1,5 @@
 [webserver]
-webserver_artemis
+webserver_artemis ansible_host=localhost
 webserver_appolon
 webserver_hermes
 

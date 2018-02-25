@@ -1,20 +1,65 @@
 #!/usr/bin/env python
 import os
 import sys
+import StringIO
 
 from ansible.parsing.dataloader import DataLoader
 from ansible.inventory.manager import InventoryManager
+import pytest
 
-script_directory_path = os.path.dirname(os.path.realpath(__file__))
+script_directory = os.path.dirname(os.path.realpath(__file__))
+root_directory = os.path.join(script_directory, '..')
 
 def main(arguments):
     loader = DataLoader()
-    inventory = InventoryManager(loader=loader, sources=[script_directory_path + '/../hosts'])
+    inventory = InventoryManager(loader=loader, sources=[os.path.join(root_directory, 'hosts')])
     inventory.parse_sources()
 
+    hosts = []
+    for h in inventory.hosts.values():
+        hosts.append({
+            'address': get_address(h),
+            'groups': [g for g in h.groups],
+            'name': h.name,
+        })
 
-    hosts = [h for h in inventory.hosts]
-    print(hosts)
+    old = sys.stdout
+    sys.stdout = StringIO.StringIO()
+    for host in hosts:
+        print('host: ' + host['name'])
+        tests_directory = []
+        for group in host['groups']:
+            path = os.path.join(root_directory, 'tests/{0}'.format(group))
+            if os.path.isdir(path):
+                tests_directory.append(path)
+
+        if len(tests_directory) != 0:
+            pytest.main(['--verbose', '--sudo', '--hosts=' + host['address'], ' '.join(tests_directory)])
+
+    contents = sys.stdout.getvalue()
+    sys.stdout=old
+    print(contents)
+
+    # short version for reporting
+    # for content in contents.split('\n'):
+    #     if content.startswith('host'):
+    #         print('')
+    #         print(content)
+    #
+    #     if content.startswith('test'):
+    #         print(' ' + content)
+
+def get_address(host):
+    address = ''
+    if 'ansible_user' in host.vars:
+        address += host.vars['ansible_user'] + '@'
+
+    if 'ansible_host' in host.vars:
+        address += host.vars['ansible_host']
+    else:
+        address += host.address
+
+    return address
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
