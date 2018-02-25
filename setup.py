@@ -11,6 +11,7 @@ setup(
         'console_scripts': [],
     },
     install_requires = [
-      'testinfra'
+        'ansible',
+        'testinfra'
     ]
 )
