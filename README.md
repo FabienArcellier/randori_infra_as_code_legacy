@@ -52,22 +52,16 @@ You can find the latest version to ...
 
 ## Code Example
 
-**Jouer les tests serverspec**
-
-```bash
-rake all
-```
-
 **Pour configurer votre infrastructure**
 
 ```bash
 ansible-playbook -i hosts playbooks/site.yml
 ```
 
-**Lister les suites de test serverspec**
+**Lister les suites de test**
 
 ```bash
-rake --tasks
+bin/test_infrastructure
 ```
 
 ## Tips
