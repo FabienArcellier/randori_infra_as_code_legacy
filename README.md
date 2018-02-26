@@ -52,22 +52,16 @@ You can find the latest version to ...
 
 ## Code Example
 
-**Jouer les tests serverspec**
-
-```bash
-rake all
-```
-
 **Pour configurer votre infrastructure**
 
 ```bash
-ansible-playbook -i hosts site.yml
+ansible-playbook -i hosts playbooks/site.yml
 ```
 
-**Lister les suites de test serverspec**
+**Lister les suites de test**
 
 ```bash
-rake --tasks
+bin/test_infrastructure
 ```
 
 ## Tips
@@ -75,67 +69,49 @@ rake --tasks
 **Vérifier votre code ansible pendant que vous développez**
 
 ```bash
-watch -n 5 ansible-playbook --syntax-check -i "localhost," site.yml
-```
-
-**Se connecter en ssh sur une machine**
-
-Vous pouvez utiliser le fichier ssh.config plutot que l'accès vagrant.
-Vous pourrez utiliser la même démarche pour un autre environnement.
-
-```bash
-ssh -F ssh.config webserver_artemis
+watch -n 5 ansible-playbook --syntax-check -i "localhost," playbooks/site.yml
 ```
 
 ## Installation
 
+### Avec vagrant
+
 Pour monter l'environnement, la première fois :
 
 ```bash
+cd bootstrap
 vagrant up
-vagrant ssh-config > ssh.config
-ansible-playbook -i hosts bootstrap/site.yml
+vagrant ssh-config > ../ssh.config
+
+cd ..
+ansible-playbook -i hosts bootstrap/playbooks/site.yml
 ```
 
-**Comment avons nous monté ce repository ?**
-
-Pour bootstraper ce projet, nous avons utilisé ``ansible_spec`` ([lien](https://github.com/volanja/ansible_spec))
+Dans le fichier `ansible.cfg`, ajoutez les lignes
 
 ```
-vagrant init
-gem install ansible_spec
+[ssh_connection]
+ssh_args = -o ControlPersist=15m -F ssh.config -q
 ```
 
-Nous avons modifié le rakefile pour qu'il prenne en compte le groupe, plutôt que les rôles dans le groupe.
+### Sur AWS
 
-```ruby
-- roles = property["roles"]
-- for role in property["roles"]
--   deps = AnsibleSpec.load_dependencies(role)
--   roles += deps
-- end
-- t.pattern = 'roles/{' + roles.join(',') + '}/spec/*_spec.rb'
-+ t.pattern = 'spec/' +  property["name"] +'_spec.rb'
-```
-
-**Pourquoi construire un fichier ssh.config ?**
-
-Si le fichier ssh.config est absent, nous devrions configurer soit le fichier host de la machine, soit compter sur un DNS.
-Le fichier ssh.config est utilisé par ansible et serverspec pour se connecter en ssh sur la machine distante.
-Il y récupère l'adresse IP et le nom d'utilisateur.
-
-A partir du Vagrantfile, nous avons généré le fichier ssh.config qui correspond à l'infrastructure.
+Vous devez configurer votre VPC et votre subnet dans le fichier `bootstrap/main.tf`.
 
 ```bash
-vagrant ssh-config > ssh.config
+cd bootstrap
+terraform plan
+terraform apply
 ```
+
+la commande terraform output permet de recuperer le fichier `host`
 
 ## Tests
 
 Pour vérifier la syntaxe de votre code ansible
 
 ```bash
-ansible-playbook --syntax-check -i "localhost," site.yml
+ansible-playbook --syntax-check -i "localhost," playbooks/site.yml
 ```
 
 ## Contributors

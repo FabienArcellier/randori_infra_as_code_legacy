@@ -1,0 +1,6 @@
+---
+- import_playbook: database_zeus.yml
+- import_playbook: database_poseidon.yml
+- import_playbook: webserver_artemis.yml
+- import_playbook: webserver_appolon.yml
+- import_playbook: webserver_hermes.yml

@@ -1,6 +1,0 @@
----
-- include: playbooks/database_zeus.yml
-- include: playbooks/database_poseidon.yml
-- include: playbooks/webserver_artemis.yml
-- include: playbooks/webserver_appolon.yml
-- include: playbooks/webserver_hermes.yml

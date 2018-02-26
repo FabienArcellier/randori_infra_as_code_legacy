@@ -1,8 +1,8 @@
 [webserver]
-webserver_artemis
-webserver_appolon
-webserver_hermes
+webserver_appolon ansible_host=34.248.128.160 ansible_user=ubuntu
+webserver_artemis ansible_host=34.245.127.27 ansible_user=ubuntu
+webserver_hermes ansible_host=34.244.137.126 ansible_user=ubuntu
 
 [database]
-database_zeus
-database_poseidon
+database_poseidon ansible_host=34.243.126.239 ansible_user=ubuntu
+database_zeus ansible_host=34.245.112.10 ansible_user=ubuntu

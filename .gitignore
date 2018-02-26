@@ -1,5 +1,9 @@
 /.idea
 /.vagrant
 /ssh.config
+/venv
+/.pytest_cache
 *.retry
-.rake_tasks*
+__pycache__
+.terraform
+terraform.tfstate*
