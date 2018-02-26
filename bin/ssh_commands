@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+import os
+import sys
+
+from ansible.parsing.dataloader import DataLoader
+from ansible.inventory.manager import InventoryManager
+
+script_directory = os.path.dirname(os.path.realpath(__file__))
+root_directory = os.path.join(script_directory, '..')
+
+def main(arguments):
+    loader = DataLoader()
+    inventory = InventoryManager(loader=loader, sources=[os.path.join(root_directory, 'hosts')])
+    inventory.parse_sources()
+
+    hosts = []
+    for h in inventory.hosts.values():
+        hosts.append({
+            'address': get_address(h),
+            'groups': [g for g in h.groups],
+            'name': h.name,
+        })
+
+    for host in hosts:
+        print('{0:20s}: ssh {1}'.format(host['name'], host['address']))
+
+def get_address(host):
+    address = ''
+    if 'ansible_user' in host.vars:
+        address += host.vars['ansible_user'] + '@'
+
+    if 'ansible_host' in host.vars:
+        address += host.vars['ansible_host']
+    else:
+        address += host.address
+
+    return address
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv[1:]))
