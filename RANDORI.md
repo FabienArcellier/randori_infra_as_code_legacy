@@ -47,7 +47,7 @@ Nous allons nous assurer d'installer un serveur ``Network Time Protocol`` (ntp) 
 
 Pour cet exercice, nous ferons un test serveurspec pour chaque profil.
 
-écrire le test serverspec dans ``tests/all/test_host.py``:
+écrire le test dans ``tests/all/test_host.py`` à partir du test serverspec:
 
 ```ruby
 describe "webserver" do
@@ -123,9 +123,7 @@ Allez plus loin
 
 
 ```ruby
-describe "webserver" do
-  it "needs to have the port 81 listening to send static assets" do
-    expect(port('81')).to be_listening
-  end
-end
+def test_should_listen_on_port_81_for_static_file(host):
+    # Assert
+    assert host.socket("tcp://81").is_listening
 ```

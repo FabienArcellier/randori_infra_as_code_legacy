@@ -75,7 +75,7 @@ rake --tasks
 **Vérifier votre code ansible pendant que vous développez**
 
 ```bash
-watch -n 5 ansible-playbook --syntax-check -i "localhost," site.yml
+watch -n 5 ansible-playbook --syntax-check -i "localhost," playbooks/site.yml
 ```
 
 ## Installation
@@ -117,7 +117,7 @@ la commande terraform output permet de recuperer le fichier `host`
 Pour vérifier la syntaxe de votre code ansible
 
 ```bash
-ansible-playbook --syntax-check -i "localhost," site.yml
+ansible-playbook --syntax-check -i "localhost," playbooks/site.yml
 ```
 
 ## Contributors
