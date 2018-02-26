@@ -4,14 +4,12 @@
 
 Nous allons décrire une règle qui spécifie qu'un serveur web doit avoir le port 80 ouvert.
 
-écrire le test serverspec dans ``spec/webserver_spec.rb``:
+écrire le test testinfra dans ``tests/webserver/test_hosts.py``:
 
-```ruby
-describe "webserver" do
-  it "needs to have the port 80 listening" do
-    expect(port('80')).to be_listening
-  end
-end
+```python
+def test_should_listen_on_port_80(host):
+    # Assert
+    assert host.socket("tcp://80").is_listening
 ```
 
 **Indice Ansible** : Vous devez utiliser le module service pour vous assurer que le service apache2 est démarré sur toutes les machines
@@ -38,6 +36,7 @@ Allez plus loin :
 * L'importance du monitoring
 * L'importance de pouvoir "lire" le titre d'un test comme une phrase
 * Utiliser Ansible pour du test d'infrastructure
+* la réfutabilité dans la preuve scientifique (Karl Popper)
 * ...
 
 # Challenge 2 : Synchroniser tous les serveurs avec un serveur ntp
@@ -48,7 +47,7 @@ Nous allons nous assurer d'installer un serveur ``Network Time Protocol`` (ntp) 
 
 Pour cet exercice, nous ferons un test serveurspec pour chaque profil.
 
-écrire le test serverspec dans ``spec/webserver_spec.rb``:
+écrire le test serverspec dans ``tests/all/test_host.py``:
 
 ```ruby
 describe "webserver" do
@@ -61,18 +60,6 @@ describe "webserver" do
 end
 ```
 
-écrire le test serverspec dans ``spec/database_spec.rb``:
-
-```ruby
-describe "database" do
-  # ...
-  it "needs to have the ntp service installed and active" do
-    expect(package('ntp')).to be_installed
-    expect(service('ntp')).to be_running
-  end
-  # ...
-end
-```
 
 **Indice Ansible** : Vous devez utiliser le module apt pour vous assurer que le package ``ntp`` est démarré sur toutes les machines
 

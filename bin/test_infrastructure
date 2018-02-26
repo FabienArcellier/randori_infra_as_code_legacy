@@ -34,7 +34,10 @@ def main(arguments):
                 tests_directory.append(path)
 
         if len(tests_directory) != 0:
-            pytest.main(['--verbose', '--sudo', '--hosts=' + host['address'], ' '.join(tests_directory)])
+            os.system('pytest --verbose --sudo --connection=ssh --hosts={0} '.format(host['address'], ' '.join(tests_directory)))
+
+            # Cette ligne pose probleme du au chargement multiple du plugin de testinfra
+            # pytest.main(['--verbose', '--sudo', '--hosts=' + host['address'], ' '.join(tests_directory)])
 
     # contents = sys.stdout.getvalue()
     # sys.stdout=old
