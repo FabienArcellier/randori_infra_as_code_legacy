@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+import os
+import sys
+
+script_directory = os.path.dirname(os.path.realpath(__file__))
+root_directory = os.path.join(script_directory, '..')
+
+def main():
+    os.system('ansible-playbook --syntax-check -i "localhost," {0}/playbooks/site.yml'.format(root_directory))
+
+if __name__ == '__main__':
+    sys.exit(main())
