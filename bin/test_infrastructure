@@ -23,8 +23,8 @@ def main(arguments):
             'name': h.name,
         })
 
-    old = sys.stdout
-    sys.stdout = StringIO.StringIO()
+    # old = sys.stdout
+    # sys.stdout = StringIO.StringIO()
     for host in hosts:
         print('host: ' + host['name'])
         tests_directory = []
@@ -36,9 +36,9 @@ def main(arguments):
         if len(tests_directory) != 0:
             pytest.main(['--verbose', '--sudo', '--hosts=' + host['address'], ' '.join(tests_directory)])
 
-    contents = sys.stdout.getvalue()
-    sys.stdout=old
-    print(contents)
+    # contents = sys.stdout.getvalue()
+    # sys.stdout=old
+    # print(contents)
 
     # short version for reporting
     # for content in contents.split('\n'):
